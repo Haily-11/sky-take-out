@@ -67,13 +67,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 新增员工
+     *
      * @param employeeDTO
      */
     public void save(EmployeeDTO employeeDTO) {
         //1、将DTO对象转换为实体对象
         Employee employee = new Employee();
-       //对象属性拷贝，属性名一致才可以拷贝
-        BeanUtils.copyProperties(employeeDTO,employee);
+        //对象属性拷贝，属性名一致才可以拷贝
+        BeanUtils.copyProperties(employeeDTO, employee);
         //设置账号的状态，1表示正常状态默认启用
         employee.setStatus(StatusConstant.ENABLE);
         //设置默认密码123456，需要进行md5加密处理
@@ -91,6 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 分页查询
+     *
      * @param employeePageQueryDTO
      * @return
      */
@@ -105,6 +107,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 启用禁用员工账号
+     *
      * @param status
      * @param id
      */
@@ -114,6 +117,31 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .status(status)
                 .id(id)
                 .build();
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    public Employee getById(Long id) {
+       Employee employee =employeeMapper.getById(id);
+       //将前端获得的密码转为****，增强安全性
+        employee.setPassword("****");
+       return employee;
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     */
+    public void update(EmployeeDTO employeeDTO){
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 }
