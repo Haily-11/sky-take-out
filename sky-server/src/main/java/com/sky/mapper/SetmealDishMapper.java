@@ -25,7 +25,7 @@ public interface SetmealDishMapper {
      */
     //动态sql，根据菜品id查询对应的套餐id
     //select setmeal_id from setmeal_dish where dish_id in (1,2,3,4)
-    List<Long> getSetmealIdsByDishId(List<Long> dishIds);
+    List<Long> getSetmealIdsByDishIds(List<Long> dishIds);
 
     /**
      * 根据套餐id删除套餐和菜品的关联关系
@@ -41,4 +41,6 @@ public interface SetmealDishMapper {
      */
     @Select("select * from setmeal_dish where setmeal_id = #{setmealId}")
     List<SetmealDish> getBySetmealId(Long setmealId);
+
+
 }
