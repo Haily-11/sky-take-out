@@ -39,8 +39,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         //判断当前加入的商品是否已经在购物车中
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
-        Long usersId = BaseContext.getCurrentId();
-        shoppingCart.setUserId(usersId);
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
 
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
 
